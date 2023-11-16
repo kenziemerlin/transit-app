@@ -52,4 +52,7 @@ dependencies {
     //location
     //location
     implementation("com.google.android.gms:play-services-location:21.0.1")
+    implementation ("com.mapbox.maps:android:10.16.2")
+    implementation (group= "org.mobilitydata", name= "gtfs-realtime-bindings", version= "0.0.8")
+
 }
