@@ -49,6 +49,9 @@ class HomeFragment : Fragment() {
         val feed = FeedMessage.parseFrom(url.openStream())
 
         for (entity in feed.entityList) {
+            Log.v("Route ID: ", entity.vehicle.trip.routeId)
+            Log.v("Latitude: ",entity.vehicle.position.latitude.toString())
+            Log.v("Longitude: ",entity.vehicle.position.longitude.toString())
             if (entity.hasTripUpdate()) {
                 Log.i("testing", entity.tripUpdate.toString())
             }
