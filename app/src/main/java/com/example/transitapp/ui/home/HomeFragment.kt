@@ -45,19 +45,23 @@ class HomeFragment : Fragment() {
 
         //mapView = (binding.mapView)
         mapView = root.findViewById(R.id.mapView)
-
         viewAnnotationManager =  mapView!!.viewAnnotationManager
-        mapboxMap = mapView!!.getMapboxMap().apply {
-            // Load a map style
-            loadStyleUri("mapbox://styles/baghetti/clp1evjo200uf01qodup00rgg") {
-                // Get the center point of the map
-                val center = mapboxMap.cameraState.center
-                // Add the view annotation at the center point
-                addViewAnnotation(center)
-            }
-        }
 
-        help()
+        val url = URL("https://gtfs.halifax.ca/realtime/Vehicle/VehiclePositions.pb")
+
+        val feed = FeedMessage.parseFrom(url.openStream())
+
+        for (entity in feed.entityList) {
+            val routeId = entity.vehicle.trip.routeId
+            val longitude = entity.vehicle.position.latitude.toDouble()
+            val latitude = entity.vehicle.position.longitude.toDouble()
+            val point = Point.fromLngLat(longitude, latitude)
+
+            addViewAnnotation(routeId, point)
+        }
+        mapView!!.getMapboxMap().loadStyleUri("mapbox://styles/baghetti/clp1evjo200uf01qodup00rgg") {
+
+        }
 
         return root
     }
@@ -67,7 +71,7 @@ class HomeFragment : Fragment() {
         mapView?.onDestroy()
     }
 
-    private fun addViewAnnotation(point: Point) {
+    private fun addViewAnnotation(routeId: String, point: Point) {
         // Define the view annotation
         val viewAnnotation = viewAnnotationManager.addViewAnnotation(
             // Specify the layout resource id
@@ -77,8 +81,12 @@ class HomeFragment : Fragment() {
                 geometry(point)
             }
         )
+        val textView = viewAnnotation.findViewById<TextView>(R.id.annotation)
+        val binding = AnnotationViewBinding.bind(viewAnnotation)
 
-        AnnotationViewBinding.bind(viewAnnotation)
+        textView.setText(routeId)
+
+        }
     }
 
      fun help(){
@@ -95,4 +103,3 @@ class HomeFragment : Fragment() {
             }
         }
     }
-}
