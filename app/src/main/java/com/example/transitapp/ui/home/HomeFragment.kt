@@ -12,6 +12,7 @@ import com.example.transitapp.databinding.AnnotationViewBinding
 import com.example.transitapp.databinding.FragmentHomeBinding
 import com.google.transit.realtime.GtfsRealtime.FeedMessage
 import com.mapbox.geojson.Point
+import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapView
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.Style
@@ -25,10 +26,15 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private lateinit var viewAnnotationManager: ViewAnnotationManager
     private lateinit var mapboxMap: MapboxMap
+    private var longitude: Double = 0.0
+    private var latitude: Double = 0.0
+
 
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+
+
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -38,13 +44,23 @@ class HomeFragment : Fragment() {
         super.onCreate(savedInstanceState)
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
+
+
+        arguments?.let { bundle ->
+            longitude = bundle.getDouble("longitude", longitude)
+            latitude = bundle.getDouble("latitude", latitude)
+        }
+
+
         // Create view annotation manager
         viewAnnotationManager = binding.mapView.viewAnnotationManager
         mapboxMap = binding.mapView.getMapboxMap().apply {
             // Load a map style
             loadStyleUri("mapbox://styles/baghetti/clp1evjo200uf01qodup00rgg") {
                 // Get the center point of the map
-                val center = mapboxMap.cameraState.center
+                val userLocation = Point.fromLngLat(longitude, latitude)
+                val cameraOptions = CameraOptions.Builder().center(userLocation).zoom(12.0).build()
+                mapboxMap.setCamera(cameraOptions)
                 // Add the view annotation at the center point
                 getBuses()
             }

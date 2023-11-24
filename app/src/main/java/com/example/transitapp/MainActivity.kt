@@ -56,6 +56,13 @@ class MainActivity : AppCompatActivity() {
         val latitude = intent.getDoubleExtra("latitude", 0.0)
         val longitude = intent.getDoubleExtra("longitude", 0.0)
 
+        val bundle = Bundle().apply {
+            putDouble("longitude", longitude)
+            putDouble("latitude", latitude)
+        }
+
+        navController.navigate(R.id.navigation_home, bundle)
+
         val location = "$latitude,$longitude"
 
 
