@@ -4,9 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.transitapp.R
 import com.example.transitapp.databinding.FragmentDashboardBinding
 
 class DashboardFragment : Fragment() {
@@ -22,13 +25,15 @@ class DashboardFragment : Fragment() {
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View {
-
-
         _binding = FragmentDashboardBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textDashboard
-        textView.text= "This is the dashboard fragment"
+        val auto: AutoCompleteTextView = binding.autoCompleteTextView
+        val routes = resources.getStringArray(R.array.routes)
+        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, routes )
+        auto.setAdapter(adapter)
+
+
         return root
     }
 
