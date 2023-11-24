@@ -23,15 +23,14 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        //
+        // network op on same thread
+        //
         val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
         StrictMode.setThreadPolicy(policy)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        //
-        // network op on same thread
-        //
 
 
 
@@ -58,6 +57,10 @@ class MainActivity : AppCompatActivity() {
         val longitude = intent.getDoubleExtra("longitude", 0.0)
 
         val location = "$latitude,$longitude"
+
+
+
+
 
         Log.i("Test", location);
 
