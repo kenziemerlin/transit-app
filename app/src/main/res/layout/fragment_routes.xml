@@ -10,53 +10,55 @@
         android:id="@+id/autoCompleteTextView"
         android:layout_width="233dp"
         android:layout_height="67dp"
+        android:layout_marginTop="24dp"
         android:completionThreshold="1"
         android:hint="Bus Route"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.124"
+        app:layout_constraintHorizontal_bias="0.089"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.159" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/addBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="17dp"
-        android:layout_marginTop="116dp"
+        android:layout_marginTop="32dp"
         android:text="Add"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.274"
+        app:layout_constraintHorizontal_bias="0.228"
         app:layout_constraintStart_toEndOf="@+id/autoCompleteTextView"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textViewRts"
-        android:layout_width="106dp"
-        android:layout_height="29dp"
-        android:layout_marginTop="17dp"
-        android:layout_marginBottom="512dp"
+        android:layout_width="173dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="196dp"
         android:text="My Routes"
         android:textColor="#000000"
-        android:textSize="20sp"
+        android:textSize="34sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.072"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/autoCompleteTextView"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textViewMyRoutes"
-        android:layout_width="113dp"
-        android:layout_height="250dp"
-        android:layout_marginTop="36dp"
-        android:text="TextView"
+    <ScrollView
+        android:id="@+id/scroll"
+        android:layout_width="237dp"
+        android:layout_height="437dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="240dp"
+        android:layout_marginEnd="1dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.073"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewRts" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/routeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
