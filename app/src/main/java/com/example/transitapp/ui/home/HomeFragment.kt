@@ -1,5 +1,6 @@
 package com.example.transitapp.ui.home
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -18,6 +19,7 @@ import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.Style
 import com.mapbox.maps.viewannotation.ViewAnnotationManager
 import com.mapbox.maps.viewannotation.viewAnnotationOptions
+import java.io.File
 import java.net.URL
 
 
@@ -88,6 +90,17 @@ class HomeFragment : Fragment() {
     }
 
     private fun addViewAnnotation(longitude:Double, latitude:Double, routeId:String) {
+        val filename = "RoutesFile"
+        var routesArray: List<String> = emptyList()
+        val file = File(context?.filesDir, filename)
+        if (file.exists()) {
+            val fileText = context?.openFileInput(filename)?.bufferedReader()?.useLines { lines ->
+                lines.fold("") { some, text ->
+                    "$some\n$text"
+                }
+            }
+            routesArray = fileText?.split(",") ?: emptyList()
+        }
 
         val point = Point.fromLngLat(longitude, latitude)
         // Define the view annotation
@@ -102,6 +115,13 @@ class HomeFragment : Fragment() {
         AnnotationViewBinding.bind(viewAnnotation)
         val textView = viewAnnotation.findViewById<TextView>(R.id.annotation)
         textView.text = routeId;
+
+        for (route in routesArray) {
+            if (route == routeId) {
+                textView.setBackgroundResource(R.drawable.round2)
+            }
+        }
+        Log.i("test", routesArray.toString())
         }
     }
 

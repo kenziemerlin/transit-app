@@ -48,7 +48,7 @@ class RoutesFragment : Fragment() {
         val file = File(context?.filesDir, filename)
 
 
-        if (file.exists()) {
+        if (!file.exists()) {
             context?.openFileOutput(filename, Context.MODE_PRIVATE).use {
             }
         }
